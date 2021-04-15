@@ -100,7 +100,7 @@ function M.pgcli_picker(opts)
         }
       end
     },
-    sorter = sorters.get_fuzzy_file(),
+    sorter = sorters.fuzzy_with_index_bias(),
     previewer = previewers.display_content.new({}),
     attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function(_, _)
