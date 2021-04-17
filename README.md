@@ -33,7 +33,7 @@ require('telescope').load_extension('pgcli')
 :lua require('telescope').load_extension('pgcli')
 ```
 
-## Useage
+## Usage
 
 After installing, you should now be able to run `:Telescope pgcli` or you can map it as you like using something like
 
