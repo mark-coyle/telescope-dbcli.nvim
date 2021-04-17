@@ -1,6 +1,8 @@
 # telescope-pgcli.nvim
 Basic pgcli query history viewer support with telescope
 
+![telescope-pgcli.nvim](https://github.com/mark-coyle/images/blob/master/telescope-pgcli.png?raw=true)
+
 ## Dependencies
 
 This plugin will only work on Neovim nightly (0.5).
