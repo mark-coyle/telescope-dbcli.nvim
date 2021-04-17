@@ -12,14 +12,14 @@ local sorters = require('telescope.sorters')
 local query_utils = require('telescope._extensions.pgcli.query_utils')
 local finder_utils = require('telescope._extensions.pgcli.finder_utils')
 
-local history_file = ""
-local prompt_title = ""
+local pgcli_history_file = ""
+local pgcli_prompt_title = ""
+local mssql_cli_prompt_title = ""
+local mssql_cli_history_file = ""
 
 local M = {}
 
-function M.pgcli_picker(opts)
-  opts = opts or {}
-
+local dbcli_picker = function(prompt_title, history_file)
   local query_list = query_utils.query_list(history_file)
   local sorted_state = {
     last_seen_query_time = 0,
@@ -27,7 +27,7 @@ function M.pgcli_picker(opts)
     prompt_set_on_last_run = false
   }
 
-  pickers.new(opts, {
+  pickers.new({}, {
     prompt_title = prompt_title,
     finder = finders.new_table {
       results = query_list,
@@ -53,12 +53,23 @@ function M.pgcli_picker(opts)
   }):find()
 end
 
+M.pgcli_picker = function()
+  return dbcli_picker(pgcli_prompt_title, pgcli_history_file)
+end
+
+M.mssql_cli_picker = function()
+  return dbcli_picker(mssql_cli_prompt_title, mssql_cli_history_file)
+end
+
 return telescope.register_extension {
  setup = function(ext_config)
-    prompt_title = "Pgcli History"
-    history_file = ext_config.history_file or os.getenv("HOME").."/.config/pgcli/history"
+    pgcli_prompt_title = ext_config.pgcli_prompt_title or "Pgcli History"
+    pgcli_history_file = ext_config.pgcli_history_file or os.getenv("HOME").."/.config/pgcli/history"
+    mssql_cli_prompt_title = ext_config.mssql_cli_prompt_title or "Mssql-cli History"
+    mssql_cli_history_file = ext_config.mssql_cli_history_file or os.getenv("HOME").."/.config/mssql-cli/history"
   end,
   exports = {
-    pgcli = M.pgcli_picker
+    pgcli = M.pgcli_picker,
+    mssql_cli = M.mssql_cli_picker
   },
 }

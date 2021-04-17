@@ -39,21 +39,26 @@ After installing, you should now be able to run `:Telescope pgcli` or you can ma
 
 ```
 :lua require('telescope').extensions.pgcli.pgcli()
+:lua require('telescope').extensions.pgcli.mssql_cli()
 ```
 
 ## Config
 
-This extension was written with `pgcli` in mind but in theory it may/should work with any of the other `dbcli` tools provided they use the same history file format as `pgcli`. For instance, I also use `mssql-cli` from time to time and that _is_ in the same format, so, this extension will work for both of those tools.
-
-As such, there are a couple of config options available to make this extension work for other dbcli tools.
-
-`prompt_title` which will be used as the title of the display that telescope renders. This means you can provide strings such as `Pgcli History` or `Mssql-cli History` or any other string that helps you differentiate between the tools.
-The default prompt title will be `Pgcli History`.
-
-`history_file` this allows you to supply a path to the query file you wish to load from, which helps in supporting multiple `dbcli` tools.
-**NOTE**: The default history file will be `$HOME/.config/pgcli/history`, it is recommended you pass in the correct file path for your machine if it differs.
+As it happens, `pgcli` and `mssql-cli` have history files that share a format, the same underlying picker logic works for both.
+As such, you can define the history file path and the prompt title for none, either or both in the telescope extension config.
+There are default values, meaning you don't need to provide the following config. ( defaults as shown in the config example )
 
 ```lua
-:lua require('telescope').extensions.pgcli.pgcli({ prompt_title = 'Pgcli History', history_file = '<your_path_to_pgcli>/pgcli/history' })
-:lua require('telescope').extensions.pgcli.pgcli({ prompt_title = 'Mssql-cli History', history_file = '<your_path_to_mssql_cli>/mssql-cli/history' })
+-- in lua
+
+require('telescope').setup {
+  extensions = {
+    pgcli = {
+      pgcli_prompt_title = 'Pgcli History'
+      pgcli_history_file = os.getenv('HOME') .. "/.config/pgcli/history",
+      mssql_cli_prompt_title = 'Mssql-cli History'
+      mssql_cli_history_file = os.getenv('HOME') .. "/.config/mssql-cli/history",
+    }
+  }
+}
 ```
