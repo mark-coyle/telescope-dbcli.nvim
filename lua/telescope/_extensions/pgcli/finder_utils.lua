@@ -112,13 +112,14 @@ M.mappings = function(bufnr)
     local query = vim.fn.join(content, "\n")
     actions.close(bufnr)
 
-    -- TODO: I think it may be more useful to open a new buffer, with the SQL ft rather than
-    -- just copy it?
     if query then
-      local cmd="call setreg(v:register,'"..query.."')";
-      vim.cmd(cmd)
+      --[[ local cmd="call setreg(v:register,'"..query.."')";
+      vim.cmd(cmd) ]]
 
-      print("Query copied")
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(query, "\n"))
+      putils.highlighter(buf, 'sql')
+      vim.api.nvim_set_current_buf(buf)
     end
   end)
 
