@@ -106,20 +106,24 @@ M.entry_maker = function(line, query_list)
   }
 end
 
-M.mappings = function(bufnr)
+M.mappings = function(bufnr, on_query_select)
   actions.select_default:replace(function(_, _)
     local content = action_state.get_selected_entry().value
     local query = vim.fn.join(content, "\n")
     actions.close(bufnr)
 
     if query then
-      --[[ local cmd="call setreg(v:register,'"..query.."')";
-      vim.cmd(cmd) ]]
+      if on_query_select.add_query_to_register then
+        local cmd="call setreg(v:register,'"..query.."')";
+        vim.cmd(cmd)
+      end
 
-      local buf = vim.api.nvim_create_buf(false, true)
-      vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(query, "\n"))
-      putils.highlighter(buf, 'sql')
-      vim.api.nvim_set_current_buf(buf)
+      if on_query_select.open_in_scratch_buffer then
+        local buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(query, "\n"))
+        putils.highlighter(buf, 'sql')
+        vim.api.nvim_set_current_buf(buf)
+      end
     end
   end)
 

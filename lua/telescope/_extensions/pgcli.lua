@@ -16,6 +16,7 @@ local pgcli_history_file = ""
 local pgcli_prompt_title = ""
 local mssql_cli_prompt_title = ""
 local mssql_cli_history_file = ""
+local on_query_select = {}
 
 local M = {}
 
@@ -48,7 +49,7 @@ local dbcli_picker = function(prompt_title, history_file)
     },
     previewer = previewers.display_content.new({}),
     attach_mappings = function(prompt_bufnr)
-      return finder_utils.mappings(prompt_bufnr)
+      return finder_utils.mappings(prompt_bufnr, on_query_select)
     end,
   }):find()
 end
@@ -67,6 +68,10 @@ return telescope.register_extension {
     pgcli_history_file = ext_config.pgcli_history_file or os.getenv("HOME").."/.config/pgcli/history"
     mssql_cli_prompt_title = ext_config.mssql_cli_prompt_title or "Mssql-cli History"
     mssql_cli_history_file = ext_config.mssql_cli_history_file or os.getenv("HOME").."/.config/mssql-cli/history"
+    on_query_select = ext_config.on_query_select or {
+      open_in_scratch_buffer = true,
+      add_query_to_register = false
+    }
   end,
   exports = {
     pgcli = M.pgcli_picker,
