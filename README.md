@@ -43,6 +43,17 @@ After installing, you should now be able to run `:Telescope pgcli` or you can ma
 
 ## Config
 
-Currently there are no custom options, so all you need to do is load the extensions and map it/use it however you see fit :)
+This extension was written with `pgcli` in mind but in theory it may/should work with any of the other `dbcli` tools provided they use the same history file format as `pgcli`. For instance, I also use `mssql-cli` from time to time and that _is_ in the same format, so, this extension will work for both of those tools.
 
-*NOTE* There is an assumption that you `pgcli` history file is located at `$HOME/.config/pgcli/history`
+As such, there are a couple of config options available to make this extension work for other dbcli tools.
+
+`prompt_title` which will be used as the title of the display that telescope renders. This means you can provide strings such as `Pgcli History` or `Mssql-cli History` or any other string that helps you differentiate between the tools.
+The default prompt title will be `Pgcli History`.
+
+`history_file` this allows you to supply a path to the query file you wish to load from, which helps in supporting multiple `dbcli` tools.
+**NOTE**: The default history file will be `$HOME/.config/pgcli/history`, it is recommended you pass in the correct file path for your machine if it differs.
+
+```lua
+:lua require('telescope').extensions.pgcli.pgcli({ prompt_title = 'Pgcli History', history_file = '<your_path_to_pgcli>/pgcli/history' })
+:lua require('telescope').extensions.pgcli.pgcli({ prompt_title = 'Mssql-cli History', history_file = '<your_path_to_mssql_cli>/mssql-cli/history' })
+```
