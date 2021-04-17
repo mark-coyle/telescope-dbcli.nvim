@@ -48,11 +48,9 @@ After installing, you should now be able to run `:Telescope pgcli` or you can ma
 
 As it happens, `pgcli` and `mssql-cli` have history files that share a format, the same underlying picker logic works for both.
 As such, you can define the history file path and the prompt title for none, either or both in the telescope extension config.
-There are default values, meaning you don't need to provide the following config. ( defaults as shown in the config example )
+The defaults for the following config options are the values used in the example, should you need to change the defaults, you can override them like so:
 
 ```lua
--- in lua
-
 require('telescope').setup {
   extensions = {
     pgcli = {
