@@ -1,7 +1,7 @@
-# telescope-pgcli.nvim
-Basic pgcli query history viewer support with telescope
+# telescope-dbcli.nvim
+Basic dbcli query history viewer support with telescope
 
-![telescope-pgcli.nvim](https://github.com/mark-coyle/images/blob/master/telescope-pgcli.png?raw=true)
+![telescope-dbcli.nvim](https://github.com/mark-coyle/images/blob/master/telescope-pgcli.png?raw=true)
 
 ## Dependencies
 
@@ -15,10 +15,10 @@ Using your preferred plugin manager ( Packer and vim-plug for example )
 
 ```lua
 -- Packer
-use { 'mark-coyle/telescope-pgcli.nvim' }
+use { 'mark-coyle/telescope-dbcli.nvim' }
 
 -- Plug
-Plug 'mark-coyle/telescope-pgcli.nvim'
+Plug 'mark-coyle/telescope-dbcli.nvim'
 ```
 
 Run your plugin managers installer `:PackerSync/:PlugInstall`
@@ -27,21 +27,21 @@ Then load the extension in your lua/viml config
 
 ```lua
 -- in lua
-require('telescope').load_extension('pgcli')
+require('telescope').load_extension('dbcli')
 ```
 
 ```viml
 -- in vimscript
-:lua require('telescope').load_extension('pgcli')
+:lua require('telescope').load_extension('dbcli')
 ```
 
 ## Usage
 
-After installing, you should now be able to run `:Telescope pgcli` or you can map it as you like using something like
+After installing, you should now be able to run `:Telescope dbcli` or you can map it as you like using something like
 
 ```
-:lua require('telescope').extensions.pgcli.pgcli()
-:lua require('telescope').extensions.pgcli.mssql_cli()
+:lua require('telescope').extensions.dbcli.pgcli()
+:lua require('telescope').extensions.dbcli.mssql_cli()
 ```
 
 ## Config
@@ -54,7 +54,7 @@ The defaults for the following config options are the values used in the example
 ```lua
 require('telescope').setup {
   extensions = {
-    pgcli = {
+    dbcli = {
       pgcli_prompt_title = 'Pgcli History'
       pgcli_history_file = os.getenv('HOME') .. "/.config/pgcli/history",
       mssql_cli_prompt_title = 'Mssql-cli History'

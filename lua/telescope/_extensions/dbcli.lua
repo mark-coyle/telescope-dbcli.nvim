@@ -9,8 +9,8 @@ local previewers = require('telescope.previewers')
 local pickers = require('telescope.pickers')
 local sorters = require('telescope.sorters')
 
-local query_utils = require('telescope._extensions.pgcli.query_utils')
-local finder_utils = require('telescope._extensions.pgcli.finder_utils')
+local query_utils = require('telescope._extensions.dbcli.query_utils')
+local finder_utils = require('telescope._extensions.dbcli.finder_utils')
 
 local pgcli_history_file = ""
 local pgcli_prompt_title = ""
@@ -67,7 +67,7 @@ return telescope.register_extension {
     pgcli_prompt_title = ext_config.pgcli_prompt_title or "Pgcli History"
     pgcli_history_file = ext_config.pgcli_history_file or os.getenv("HOME").."/.config/pgcli/history"
     mssql_cli_prompt_title = ext_config.mssql_cli_prompt_title or "Mssql-cli History"
-    mssql_cli_history_file = ext_config.mssql_cli_history_file or os.getenv("HOME").."/.config/mssql-cli/history"
+    mssql_cli_history_file = ext_config.mssql_cli_history_file or os.getenv("HOME").."/.config/mssqlcli/history"
     on_query_select = ext_config.on_query_select or {
       open_in_scratch_buffer = true,
       add_query_to_register = false
