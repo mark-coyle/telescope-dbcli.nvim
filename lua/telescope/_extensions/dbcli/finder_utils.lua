@@ -40,11 +40,7 @@ local score_query_list_by_prompt_value = function(prompt, entry, scoring_state)
     return scoring_state.last_seen_query_index, new_state
   end
 
-  -- if entry.query:lower():match("["..prompt:lower().."]") == nil then
   return -1, scoring_state
-  -- end
-
-  -- return scoring_state.last_seen_query_index + 1, scoring_state
 end
 
 local score_query_list_by_date = function(entry, scoring_state)
@@ -128,6 +124,24 @@ M.mappings = function(bufnr, on_query_select)
   end)
 
   return true
+end
+
+M.highlighter = function(_, prompt, display)
+  local highlights = {}
+  display = display:lower()
+  prompt = prompt:lower()
+
+  local search_terms = vim.split(prompt, "%s")
+  local hl_start, hl_end
+
+  for _, word in pairs(search_terms) do
+    hl_start, hl_end = display:find(word, 1, true)
+    if hl_start then
+      table.insert(highlights, {start = hl_start, finish = hl_end})
+    end
+  end
+
+  return highlights
 end
 
 return M

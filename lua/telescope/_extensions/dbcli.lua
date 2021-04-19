@@ -35,6 +35,9 @@ local dbcli_picker = function(cli_opts)
       end
     },
     sorter = sorters.new {
+      highlighter = function(_, prompt, display)
+        return finder_utils.highlighter(_, prompt, display)
+      end,
       scoring_function = function(_, prompt, _, entry)
         local sort_value, new_state = finder_utils.scoring_function(prompt, entry, sorted_state)
 
