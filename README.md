@@ -1,7 +1,7 @@
 # telescope-dbcli.nvim
 Basic dbcli query history viewer support with telescope
 
-![telescope-dbcli.nvim](https://github.com/mark-coyle/images/blob/master/telescope-pgcli.png?raw=true)
+![telescope-dbcli.nvim](https://github.com/mark-coyle/images/blob/master/telescope-dbcli.png?raw=true)
 
 ## Dependencies
 
