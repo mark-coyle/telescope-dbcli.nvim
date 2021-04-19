@@ -55,10 +55,14 @@ The defaults for the following config options are the values used in the example
 require('telescope').setup {
   extensions = {
     dbcli = {
-      pgcli_prompt_title = 'Pgcli History'
-      pgcli_history_file = os.getenv('HOME') .. "/.config/pgcli/history",
-      mssql_cli_prompt_title = 'Mssql-cli History'
-      mssql_cli_history_file = os.getenv('HOME') .. "/.config/mssql-cli/history",
+      pgcli = {
+        prompt_title = 'Pgcli History'
+        history_file = os.getenv('HOME') .. "/.config/pgcli/history",
+      },
+      mssql_cli = {
+        prompt_title = 'Mssql-cli History'
+        history_file = os.getenv('HOME') .. "/.config/mssqlcli/history",
+      },
       on_query_select = {
         open_in_scratch_buffer = true,
         add_query_to_register = false

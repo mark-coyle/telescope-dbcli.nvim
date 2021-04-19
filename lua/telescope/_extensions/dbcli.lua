@@ -12,16 +12,14 @@ local sorters = require('telescope.sorters')
 local query_utils = require('telescope._extensions.dbcli.query_utils')
 local finder_utils = require('telescope._extensions.dbcli.finder_utils')
 
-local pgcli_history_file = ""
-local pgcli_prompt_title = ""
-local mssql_cli_prompt_title = ""
-local mssql_cli_history_file = ""
+local pgcli = {}
+local mssql_cli = {}
 local on_query_select = {}
 
 local M = {}
 
-local dbcli_picker = function(prompt_title, history_file)
-  local query_list = query_utils.query_list(history_file)
+local dbcli_picker = function(cli_opts)
+  local query_list = query_utils.query_list(cli_opts.history_file)
   local sorted_state = {
     last_seen_query_time = 0,
     last_seen_query_index = 0,
@@ -29,7 +27,7 @@ local dbcli_picker = function(prompt_title, history_file)
   }
 
   pickers.new({}, {
-    prompt_title = prompt_title,
+    prompt_title = cli_opts.prompt_title,
     finder = finders.new_table {
       results = query_list,
       entry_maker = function(line)
@@ -55,19 +53,23 @@ local dbcli_picker = function(prompt_title, history_file)
 end
 
 M.pgcli_picker = function()
-  return dbcli_picker(pgcli_prompt_title, pgcli_history_file)
+  return dbcli_picker(pgcli)
 end
 
 M.mssql_cli_picker = function()
-  return dbcli_picker(mssql_cli_prompt_title, mssql_cli_history_file)
+  return dbcli_picker(mssql_cli)
 end
 
 return telescope.register_extension {
  setup = function(ext_config)
-    pgcli_prompt_title = ext_config.pgcli_prompt_title or "Pgcli History"
-    pgcli_history_file = ext_config.pgcli_history_file or os.getenv("HOME").."/.config/pgcli/history"
-    mssql_cli_prompt_title = ext_config.mssql_cli_prompt_title or "Mssql-cli History"
-    mssql_cli_history_file = ext_config.mssql_cli_history_file or os.getenv("HOME").."/.config/mssqlcli/history"
+    pgcli = ext_config.pgcli or {
+      prompt_title = "Pgcli History",
+      history_file = os.getenv("HOME").."/.config/pgcli/history"
+    }
+    mssql_cli = ext_config.mssql_cli or {
+      prompt_title = "Mssqlcli History",
+      history_file = os.getenv("HOME").."/.config/mssqlcli/history"
+    }
     on_query_select = ext_config.on_query_select or {
       open_in_scratch_buffer = true,
       add_query_to_register = false
