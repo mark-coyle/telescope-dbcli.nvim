@@ -31,7 +31,7 @@ local dbcli_picker = function(cli_opts)
     finder = finders.new_table {
       results = query_list,
       entry_maker = function(line)
-        return finder_utils.entry_maker(line, query_list)
+        return finder_utils.entry_maker(line, query_list, cli_opts.display_timestamp_in_finder)
       end
     },
     sorter = sorters.new {
@@ -67,11 +67,13 @@ return telescope.register_extension {
  setup = function(ext_config)
     pgcli = ext_config.pgcli or {
       prompt_title = "Pgcli History",
-      history_file = os.getenv("HOME").."/.config/pgcli/history"
+      history_file = os.getenv("HOME").."/.config/pgcli/history",
+      display_timestamp_in_finder = true
     }
     mssql_cli = ext_config.mssql_cli or {
       prompt_title = "Mssqlcli History",
-      history_file = os.getenv("HOME").."/.config/mssqlcli/history"
+      history_file = os.getenv("HOME").."/.config/mssqlcli/history",
+      display_timestamp_in_finder = true
     }
     on_query_select = ext_config.on_query_select or {
       open_in_scratch_buffer = true,

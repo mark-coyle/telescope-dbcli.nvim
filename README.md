@@ -58,10 +58,12 @@ require('telescope').setup {
       pgcli = {
         prompt_title = 'Pgcli History'
         history_file = os.getenv('HOME') .. "/.config/pgcli/history",
+        display_timestamp_in_finder = true
       },
       mssql_cli = {
         prompt_title = 'Mssql-cli History'
         history_file = os.getenv('HOME') .. "/.config/mssqlcli/history",
+        display_timestamp_in_finder = true
       },
       on_query_select = {
         open_in_scratch_buffer = true,

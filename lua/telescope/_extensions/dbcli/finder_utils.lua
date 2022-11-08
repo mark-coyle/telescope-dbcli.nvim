@@ -5,8 +5,8 @@ local putils = require('telescope.previewers.utils')
 local M = {}
 
 local query_entry_to_table = function(query_entry)
-  local date = query_entry.display:match("%d+-%d+-%d+")
-  local time = query_entry.display:match("%d+:%d+:%d+%.%d+")
+  local date = query_entry.timestamp:match("%d+-%d+-%d+")
+  local time = query_entry.timestamp:match("%d+:%d+:%d+%.%d+")
 
   local date_parts = vim.fn.split(date, "-")
   local time_parts = vim.fn.split(time, ":")
@@ -87,12 +87,13 @@ M.scoring_function = function(prompt, entry, scoring_state)
   end
 end
 
-M.entry_maker = function(line, query_list)
+M.entry_maker = function(line, query_list, display_timestamp)
   return {
     value = line.content,
     ordinal = line.name,
     query = line.query_string,
-    display = line.name,
+    timestamp = line.timestamp,
+    display = display_timestamp and line.name or line.query_string,
     preview_command = function(entry, bufnr)
       vim.api.nvim_buf_set_virtual_text(bufnr, 0, 0, { { query_list[entry.index].timestamp, 'Comment' }} ,{})
       vim.api.nvim_buf_set_lines(bufnr, 1, -1, true, query_list[entry.index].content)
